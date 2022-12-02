@@ -11,6 +11,22 @@ describe("CallTest", () => {
     console.log(`contract address:${contract.address}`);
   });
 
+  it("with full abi call", async () => {
+    const myAbiContract: MyAbi = contract;
+    const ret = await myAbiContract.callWithoutAbi(10);
+    expect(ret).to.equals(11);
+  });
+
+  it("with partial abi call", async () => {
+    const [signer] = await ethers.getSigners();
+    const abi = [
+      `function callWithoutAbi(uint256 data) public pure returns (uint256)`,
+    ];
+    let myAbiContract = new ethers.Contract(contract.address, abi, signer);
+    const ret = await myAbiContract.callWithoutAbi(10);
+    expect(ret).to.equals(11);
+  });
+
   it("without abi call", async () => {
     const [signer] = await ethers.getSigners();
     const funcSig = "0xf3642cb9";
