@@ -3,6 +3,7 @@
 ## 运行
 
 ```shell
+npm install
 npx hardhat test
 ```
 
